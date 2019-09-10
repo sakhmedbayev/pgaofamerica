@@ -19,7 +19,6 @@ import clsx from "clsx";
 import PropTypes from "prop-types";
 import React from "react";
 
-
 export function asc(a, b, orderBy) {
   if (a[orderBy] < b[orderBy]) {
     return 1;
@@ -51,9 +50,9 @@ function stableSort(array, cmp) {
 }
 
 function getSorting(order, orderBy) {
-    return order === "desc"
-      ? (a, b) => desc(a, b, orderBy)
-      : (a, b) => -desc(a, b, orderBy);
+  return order === "desc"
+    ? (a, b) => desc(a, b, orderBy)
+    : (a, b) => -desc(a, b, orderBy);
 }
 
 const headCells = [
@@ -71,7 +70,6 @@ function EnhancedTableHead(props) {
     rowCount,
     onRequestSort
   } = props;
-
 
   const createSortHandler = property => event => {
     onRequestSort(event, property);
@@ -150,15 +148,17 @@ const useToolbarStyles = makeStyles(theme => ({
   }
 }));
 
-const handleDelete = (selected, deletePlayer) => {
-  selected.map(item =>
-    deletePlayer({ lastname: item.lastname, score: item.score })
-  );
+const handleDelete = (selected, deletePlayer, setSelected) => {
+  selected.map(async item => {
+    await deletePlayer({ lastname: item.lastname, score: item.score });
+    setSelected([]);
+    return null;
+  });
 };
 
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
-  const { numSelected, selected, deletePlayer } = props;
+  const { numSelected, selected, deletePlayer, setSelected } = props;
 
   return (
     <Toolbar
@@ -183,7 +183,7 @@ const EnhancedTableToolbar = props => {
           <Tooltip title="Delete">
             <IconButton
               aria-label="delete"
-              onClick={() => handleDelete(selected, deletePlayer)}
+              onClick={() => handleDelete(selected, deletePlayer, setSelected)}
             >
               <DeleteIcon />
             </IconButton>
@@ -304,6 +304,7 @@ export default function Leaderboard({ rows, deletePlayer }) {
           numSelected={selected.length}
           deletePlayer={deletePlayer}
           selected={selected}
+          setSelected={setSelected}
         />
         <div className={classes.tableWrapper}>
           <Table
