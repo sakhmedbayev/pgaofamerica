@@ -1,4 +1,4 @@
-# Create React App example
+# PGA of America React assessment.
 
 ## How to use
 
