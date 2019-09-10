@@ -1,0 +1,5 @@
+type Player @model @key(fields: ["score", "lastname"]) @searchable {
+  name: String!
+  lastname: String!
+  score: Int!
+}

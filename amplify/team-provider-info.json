@@ -1,0 +1,14 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "pgaofamerica-dev-20190910084307-authRole",
+            "UnauthRoleArn": "arn:aws:iam::850719251129:role/pgaofamerica-dev-20190910084307-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::850719251129:role/pgaofamerica-dev-20190910084307-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "pgaofamerica-dev-20190910084307-deployment",
+            "UnauthRoleName": "pgaofamerica-dev-20190910084307-unauthRole",
+            "StackName": "pgaofamerica-dev-20190910084307",
+            "StackId": "arn:aws:cloudformation:us-east-1:850719251129:stack/pgaofamerica-dev-20190910084307/b97ec1f0-d374-11e9-bda9-0e194fb09f5c"
+        }
+    }
+}
