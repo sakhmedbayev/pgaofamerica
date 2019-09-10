@@ -101,7 +101,7 @@ export default function AddPlayer({
           <CssBaseline />
           <div className={classes.paper}>
             <Typography component="h1" variant="h5">
-              Add a player
+              {userToEdit ? "Edit a player" : "Add a player"}
             </Typography>
             <form className={classes.form} noValidate>
               <CustomTextField
