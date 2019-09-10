@@ -2,20 +2,13 @@
 
 ## How to use
 
-Download the example [or clone the repo](https://github.com/mui-org/material-ui):
+Please consult this docs[https://aws-amplify.github.io/docs/] for general usage of amplify cli and project setup.
 
-```sh
-curl https://codeload.github.com/mui-org/material-ui/tar.gz/master | tar -xz --strip=2 material-ui-master/examples/create-react-app
-cd create-react-app
+The following is just a general instruction of what cli commands should be used in order to run the project locally
+
 ```
-
-Install it and run:
-
-```sh
-npm install
-npm start
+$ npm install -g @aws-amplify/cli
+$ amplify configure
+$ amplify init
+$ amplify push
 ```
-
-## The idea behind the example
-
-This example demonstrates how you can use [Create React App](https://github.com/facebookincubator/create-react-app).
