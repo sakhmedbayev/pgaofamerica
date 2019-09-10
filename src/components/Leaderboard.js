@@ -15,6 +15,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import React from "react";
@@ -156,9 +157,23 @@ const handleDelete = (selected, deletePlayer, setSelected) => {
   });
 };
 
+const handleUpdate = (selected, setUserToEdit, setSelected) => {
+  selected.map(async item => {
+    await setUserToEdit({ ...item });
+    setSelected([]);
+    return null;
+  });
+};
+
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
-  const { numSelected, selected, deletePlayer, setSelected } = props;
+  const {
+    numSelected,
+    selected,
+    deletePlayer,
+    setSelected,
+    setUserToEdit
+  } = props;
 
   return (
     <Toolbar
@@ -180,14 +195,30 @@ const EnhancedTableToolbar = props => {
       <div className={classes.spacer} />
       <div className={classes.actions}>
         {numSelected > 0 ? (
-          <Tooltip title="Delete">
-            <IconButton
-              aria-label="delete"
-              onClick={() => handleDelete(selected, deletePlayer, setSelected)}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
+          <div style={{ display: "flex" }}>
+            {numSelected === 1 && (
+              <Tooltip title="Edit">
+                <IconButton
+                  aria-label="edit"
+                  onClick={() =>
+                    handleUpdate(selected, setUserToEdit, setSelected)
+                  }
+                >
+                  <EditIcon />
+                </IconButton>
+              </Tooltip>
+            )}
+            <Tooltip title="Delete">
+              <IconButton
+                aria-label="delete"
+                onClick={() =>
+                  handleDelete(selected, deletePlayer, setSelected)
+                }
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          </div>
         ) : null}
       </div>
     </Toolbar>
@@ -226,7 +257,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Leaderboard({ rows, deletePlayer }) {
+export default function Leaderboard({ rows, deletePlayer, setUserToEdit }) {
   const classes = useStyles();
   const [order, setOrder] = React.useState("desc");
   const [orderBy, setOrderBy] = React.useState("score");
@@ -258,6 +289,7 @@ export default function Leaderboard({ rows, deletePlayer }) {
     }
 
     const selectedIndex = selected.findIndex(isFound);
+    
     let newSelected = [];
 
     if (selectedIndex === -1) {
@@ -305,6 +337,7 @@ export default function Leaderboard({ rows, deletePlayer }) {
           deletePlayer={deletePlayer}
           selected={selected}
           setSelected={setSelected}
+          setUserToEdit={setUserToEdit}
         />
         <div className={classes.tableWrapper}>
           <Table

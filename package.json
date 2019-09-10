@@ -19,6 +19,7 @@
     "react": "latest",
     "react-dom": "latest",
     "react-scripts": "latest",
+    "uuid": "^3.3.3",
     "yup": "^0.27.0"
   },
   "browserslist": {

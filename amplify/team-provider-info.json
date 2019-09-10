@@ -10,5 +10,17 @@
             "StackName": "pgaofamerica-dev-20190910084307",
             "StackId": "arn:aws:cloudformation:us-east-1:850719251129:stack/pgaofamerica-dev-20190910084307/b97ec1f0-d374-11e9-bda9-0e194fb09f5c"
         }
+    },
+    "devupdate": {
+        "awscloudformation": {
+            "AuthRoleName": "pgaofamerica-devupdate-20190910210157-authRole",
+            "UnauthRoleArn": "arn:aws:iam::850719251129:role/pgaofamerica-devupdate-20190910210157-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::850719251129:role/pgaofamerica-devupdate-20190910210157-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "pgaofamerica-devupdate-20190910210157-deployment",
+            "UnauthRoleName": "pgaofamerica-devupdate-20190910210157-unauthRole",
+            "StackName": "pgaofamerica-devupdate-20190910210157",
+            "StackId": "arn:aws:cloudformation:us-east-1:850719251129:stack/pgaofamerica-devupdate-20190910210157/f0303320-d3db-11e9-b37d-120371d9064c"
+        }
     }
 }

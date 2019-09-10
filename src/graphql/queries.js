@@ -3,6 +3,7 @@
 
 export const getPlayer = `query GetPlayer($score: Int!, $lastname: String!) {
   getPlayer(score: $score, lastname: $lastname) {
+    id
     name
     lastname
     score
@@ -26,6 +27,7 @@ export const listPlayers = `query ListPlayers(
     sortDirection: $sortDirection
   ) {
     items {
+      id
       name
       lastname
       score
@@ -47,6 +49,7 @@ export const searchPlayers = `query SearchPlayers(
     nextToken: $nextToken
   ) {
     items {
+      id
       name
       lastname
       score

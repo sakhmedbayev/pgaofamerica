@@ -33,7 +33,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function AddPlayer({submit}) {
+export default function AddPlayer({
+  createNewPlayer,
+  updateAPlayer,
+  userToEdit,
+  setUserToEdit
+}) {
   const classes = useStyles();
 
   const AddPlayerSchema = Yup.object().shape({
@@ -45,24 +50,43 @@ export default function AddPlayer({submit}) {
       .required("Required")
   });
 
-  const handleSubmit = (values, { resetForm }) => {
-    submit({
-      name: values.name,
-      lastname: values.lastname,
-      score: values.score
-    });
-    resetForm();
+  const handleSubmit = async (values, { resetForm }) => {
+    if (!userToEdit) {
+      await createNewPlayer({
+        name: values.name,
+        lastname: values.lastname,
+        score: values.score
+      });
+      resetForm();
+    } else {
+      await updateAPlayer(
+        {
+          id: userToEdit.id,
+          name: values.name,
+          lastname: values.lastname,
+          score: values.score
+        },
+        userToEdit
+      );
+      setUserToEdit(null);
+      resetForm();
+    }
   };
 
   return (
     <Formik
-      initialValues={{
-        name: "",
-        lastname: "",
-        score: ""
-      }}
+      initialValues={
+        userToEdit
+          ? { ...userToEdit }
+          : {
+              name: "",
+              lastname: "",
+              score: ""
+            }
+      }
       validationSchema={AddPlayerSchema}
       onSubmit={handleSubmit}
+      enableReinitialize={true}
     >
       {({
         values,
@@ -131,7 +155,7 @@ export default function AddPlayer({submit}) {
                 disabled={!isValid}
                 className={classes.submit}
               >
-                Add
+                {userToEdit ? "Edit" : "Add"}
               </Button>
             </form>
           </div>

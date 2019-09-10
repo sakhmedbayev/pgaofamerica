@@ -3,6 +3,7 @@
 
 export const onCreatePlayer = `subscription OnCreatePlayer {
   onCreatePlayer {
+    id
     name
     lastname
     score
@@ -11,6 +12,7 @@ export const onCreatePlayer = `subscription OnCreatePlayer {
 `;
 export const onUpdatePlayer = `subscription OnUpdatePlayer {
   onUpdatePlayer {
+    id
     name
     lastname
     score
@@ -19,6 +21,7 @@ export const onUpdatePlayer = `subscription OnUpdatePlayer {
 `;
 export const onDeletePlayer = `subscription OnDeletePlayer {
   onDeletePlayer {
+    id
     name
     lastname
     score

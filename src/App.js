@@ -4,20 +4,35 @@ import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import config from "./aws-exports";
 import AddPlayer from "./components/AddPlayer";
+import Leaderboard from "./components/Leaderboard";
 import { createPlayer, deletePlayer } from "./graphql/mutations";
 import { listPlayers } from "./graphql/queries";
 import { onCreatePlayer, onDeletePlayer } from "./graphql/subscriptions";
-import Leaderboard from "./components/Leaderboard";
+const uuidv1 = require("uuid/v1");
 
 API.configure(config); // Configure Amplify
 PubSub.configure(config);
 
 async function createNewPlayer(values) {
   const player = { ...values };
-  await API.graphql(graphqlOperation(createPlayer, { input: player }));
+  await API.graphql(
+    graphqlOperation(createPlayer, { input: { id: uuidv1(), ...player } })
+  );
+}
+
+async function updateAPlayer(values, userToEdit) {
+  const player = { ...values };
+  await API.graphql(
+    graphqlOperation(deletePlayer, {
+      input: { lastname: userToEdit.lastname, score: userToEdit.score }
+    })
+  );
+  await API.graphql(
+    graphqlOperation(createPlayer, { input: { id: uuidv1(), ...player } })
+  );
 }
 
 async function deleteAPlayer(values) {
@@ -67,6 +82,7 @@ function Copyright() {
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [userToEdit, setUserToEdit] = useState();
 
   useEffect(() => {
     getData();
@@ -112,8 +128,17 @@ export default function App() {
         <Typography variant="h4" component="h1" gutterBottom>
           TOUR Championship
         </Typography>
-        <AddPlayer submit={createNewPlayer} />
-        <Leaderboard rows={state.players} deletePlayer={deleteAPlayer} />
+        <AddPlayer
+          createNewPlayer={createNewPlayer}
+          updateAPlayer={updateAPlayer}
+          userToEdit={userToEdit}
+          setUserToEdit={setUserToEdit}
+        />
+        <Leaderboard
+          rows={state.players}
+          deletePlayer={deleteAPlayer}
+          setUserToEdit={setUserToEdit}
+        />
         <Copyright />
       </Box>
     </Container>
